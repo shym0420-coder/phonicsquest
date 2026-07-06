@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Phonics Quest — 소리 맞추기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Home: Level Map -->
+    <section id="screen-home" class="screen active">
+      <div class="home-decor" aria-hidden="true">
+        <span class="deco-cloud c1">☁️</span>
+        <span class="deco-cloud c2">☁️</span>
+        <span class="deco-star s1">⭐</span>
+        <span class="deco-star s2">✨</span>
+        <span class="deco-star s3">💫</span>
+        <span class="deco-heart">💕</span>
+      </div>
+      <header class="home-header">
+        <div class="mascot-row">
+          <span class="mascot mascot-fox" role="img" aria-label="여우">🦊</span>
+          <span class="mascot mascot-cat" role="img" aria-label="고양이">🐱</span>
+        </div>
+        <h1 class="logo">Phonics Quest</h1>
+        <p class="tagline">소리를 듣고 글자를 맞춰요!</p>
+        <p class="tagline-sub">🦊 여우와 🐱 고양이가 응원해요!</p>
+        <div class="total-stars">
+          <span class="star-icon">⭐</span>
+          <span id="total-stars-count">0</span>
+          <span class="star-label">별</span>
+        </div>
+      </header>
+      <div id="level-map" class="level-map"></div>
+    </section>
+
+    <!-- Level Intro -->
+    <section id="screen-intro" class="screen">
+      <button class="btn-back" id="btn-intro-back" aria-label="뒤로">←</button>
+      <div class="intro-card">
+        <div class="level-badge" id="intro-level-badge">Level 1</div>
+        <h2 id="intro-title">첫 글자 친구</h2>
+        <p id="intro-desc" class="intro-desc"></p>
+        <div class="intro-example" id="intro-example"></div>
+        <button class="btn-primary btn-large" id="btn-start-level">시작하기 🚀</button>
+      </div>
+    </section>
+
+    <!-- Game -->
+    <section id="screen-game" class="screen">
+      <header class="game-header">
+        <button class="btn-back" id="btn-game-back" aria-label="뒤로">←</button>
+        <div class="game-progress">
+          <span id="game-level-label">Level 1</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <span id="game-word-count">1 / 6</span>
+        </div>
+        <div class="streak-badge" id="streak-badge" hidden>
+          🔥 <span id="streak-count">0</span>
+        </div>
+      </header>
+
+      <main class="game-main">
+        <div class="word-card">
+          <div class="emoji-display" id="word-emoji">🐕</div>
+          <button class="btn-sound" id="btn-play-sound" aria-label="소리 듣기">
+            <span class="sound-icon">🔊</span>
+            <span>다시 듣기</span>
+          </button>
+          <div class="word-slots" id="word-slots"></div>
+          <div class="feedback" id="feedback" aria-live="polite"></div>
+        </div>
+
+        <div class="letter-pool" id="letter-pool"></div>
+
+        <div class="game-actions">
+          <button class="btn-hint" id="btn-hint" title="힌트 (별 1개)">
+            💡 힌트
+          </button>
+          <button class="btn-clear" id="btn-clear">지우기</button>
+        </div>
+      </main>
+    </section>
+
+    <!-- Level Complete -->
+    <section id="screen-complete" class="screen">
+      <div class="complete-card">
+        <div class="complete-emoji" id="complete-emoji">🎉</div>
+        <h2 id="complete-title">레벨 클리어!</h2>
+        <div class="stars-earned" id="stars-earned"></div>
+        <p id="complete-message" class="complete-message"></p>
+        <div class="complete-actions">
+          <button class="btn-secondary" id="btn-replay-level">다시 하기</button>
+          <button class="btn-primary btn-large" id="btn-next-level">다음 레벨 →</button>
+        </div>
+        <button class="btn-text" id="btn-home">홈으로</button>
+      </div>
+    </section>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="js/words.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

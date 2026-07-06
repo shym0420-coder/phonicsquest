@@ -19,11 +19,17 @@ else
   gh repo create "$REPO_NAME" --public --source=. --remote=origin --push --description "Phonics Quest — 초등학생용 phonics quiz"
 fi
 
-echo "→ GitHub Pages (Actions) 활성화..."
-gh api --method POST "/repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow 2>/dev/null || \
-  gh api --method PUT "/repos/$OWNER/$REPO_NAME/pages" -f build_type=workflow
+echo "→ GitHub Pages (main 브랜치) 활성화..."
+gh api --method POST "/repos/$OWNER/$REPO_NAME/pages" \
+  -f build_type=legacy \
+  -f 'source[branch]=main' \
+  -f 'source[path]=/' 2>/dev/null || \
+gh api --method PUT "/repos/$OWNER/$REPO_NAME/pages" \
+  -f build_type=legacy \
+  -f 'source[branch]=main' \
+  -f 'source[path]=/'
 
 echo ""
-echo "✅ 배포 시작됨!"
+echo "✅ 배포 완료!"
 echo "   저장소: https://github.com/$OWNER/$REPO_NAME"
-echo "   사이트: https://$OWNER.github.io/$REPO_NAME/ (Actions 완료 후 1~2분)"
+echo "   사이트: https://$OWNER.github.io/$REPO_NAME/ (1~2분 후 접속)"

@@ -90,8 +90,12 @@ function getShownMask(level, units, wordObj) {
       mask[n - 1] = true;
       break;
     case "show-first-two":
-      mask[0] = true;
-      if (n > 1) mask[1] = true;
+      if (wordObj.units && wordObj.units.length > 1) {
+        mask[0] = true;
+      } else {
+        mask[0] = true;
+        if (n > 1) mask[1] = true;
+      }
       break;
     case "challenge":
       if (units.length > 1) {

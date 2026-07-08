@@ -147,12 +147,8 @@ function buildDistractors(correctUnits, shownMask) {
 
   if (chunkMode) {
     const chunks = [
-      // digraphs / vowel teams / blends
-      "ch", "th", "sh", "tch", "ai", "ea", "ou", "ay", "ow", "ir", "ur", "igh",
-      "tr", "fr", "sl", "sw", "br", "cr", "pl", "bl", "st", "gr",
-      "room", "case", "bear", "five", "high", "teddy", "pencil", "dining",
-      "living", "bed", "good", "bye", "tened", "ple", "le", "en", "er", "ng",
-      "nd", "on", "se",
+      "sh", "ch", "th", "bl", "tr", "st", "fr", "fl", "cr", "dr", "gr", "pl",
+      "ai", "ee", "oa", "ea", "ue", "ar", "igh", "oo", "ay", "ow",
     ];
     while (pool.length < needed.length + 3) {
       pool.push(chunks[Math.floor(Math.random() * chunks.length)]);
@@ -227,8 +223,7 @@ function renderLevelMap() {
 
     node.innerHTML = `
       ${!unlocked ? '<span class="lock-icon">🔒</span>' : ""}
-      <span class="level-emoji">${level.emoji || "📖"}</span>
-      <span class="level-num">${level.id}</span>
+      <span class="level-num">Level ${level.id}</span>
       <span class="level-name">${level.title}</span>
       ${unlocked ? `<span class="level-stars">${starStr}</span>` : ""}
     `;
@@ -286,7 +281,6 @@ function loadWord() {
   $("#game-word-count").textContent = `${state.wordIndex + 1} / ${level.words.length}`;
   $("#progress-fill").style.width = `${(state.wordIndex / level.words.length) * 100}%`;
 
-  $("#word-emoji").textContent = wordObj.emoji;
   $("#feedback").textContent = "";
   $("#feedback").className = "feedback";
   $("#btn-hint").disabled = false;
@@ -294,7 +288,6 @@ function loadWord() {
   updateStreakUI();
   renderSlots();
   renderLetterPool();
-  renderSlots();
 
   setTimeout(() => speakWord(wordObj.word), 400);
 }
@@ -508,7 +501,7 @@ function finishLevel() {
   saveProgress();
 
   $("#progress-fill").style.width = "100%";
-  $("#complete-emoji").textContent = totalStars >= maxStars * 0.8 ? "🏆" : "🎉";
+  $("#complete-emoji").textContent = totalStars >= maxStars * 0.8 ? "Perfect!" : "Clear!";
   $("#complete-title").textContent = `${level.title} 클리어!`;
 
   const avg = totalStars / level.words.length;

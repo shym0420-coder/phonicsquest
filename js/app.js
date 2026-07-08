@@ -85,6 +85,15 @@ function getShownMask(level, units, wordObj) {
     case "show-blend-start":
       mask[0] = true;
       break;
+    case "show-digraph":
+    case "show-blend":
+    case "show-vowel-team": {
+      // Show the first multi-letter sound chunk (digraph / blend / vowel team).
+      const chunkIdx = units.findIndex((u) => u.length > 1);
+      if (chunkIdx >= 0) mask[chunkIdx] = true;
+      else mask[0] = true;
+      break;
+    }
     case "show-magic-e":
       mask[0] = true;
       mask[n - 1] = true;
@@ -98,11 +107,12 @@ function getShownMask(level, units, wordObj) {
       }
       break;
     case "challenge":
-      if (units.length > 1) {
+      if (wordObj.units && wordObj.units.length > 1) {
+        mask[0] = true;
+      } else if (n >= 4) {
         mask[0] = true;
       } else {
         mask[0] = true;
-        if (n > 4) mask[1] = true;
       }
       break;
     default:
@@ -137,10 +147,12 @@ function buildDistractors(correctUnits, shownMask) {
 
   if (chunkMode) {
     const chunks = [
+      // digraphs / vowel teams / blends
+      "ch", "th", "sh", "tch", "ai", "ea", "ou", "ay", "ow", "ir", "ur", "igh",
+      "tr", "fr", "sl", "sw", "br", "cr", "pl", "bl", "st", "gr",
       "room", "case", "bear", "five", "high", "teddy", "pencil", "dining",
-      "living", "play", "ground", "skate", "board", "sand", "box", "book",
-      "desk", "ball", "kite", "home", "yard", "sink", "sofa", "slide",
-      "train", "robot", "friend", "teacher", "hello", "good", "bye",
+      "living", "bed", "good", "bye", "tened", "ple", "le", "en", "er", "ng",
+      "nd", "on", "se",
     ];
     while (pool.length < needed.length + 3) {
       pool.push(chunks[Math.floor(Math.random() * chunks.length)]);
